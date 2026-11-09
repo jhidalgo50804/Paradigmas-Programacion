@@ -1,0 +1,16 @@
+﻿@model CoffeConnect.ViewModels.ViewModels.EditProfileViewModel
+<h3>Editar mi cuenta</h3>
+<form method="post">
+    <div class="mb-3"><label>Nombre Completo</label><input asp-for="NombreCompleto" class="form-control" /></div>
+    <div class="mb-3">
+        <label>Región</label>
+        <select asp-for="Region" class="form-control">
+            <option>Zona de los Santos</option>
+            <option>Valle Central</option>
+            <option>Zona Norte</option>
+            <option>Occidente</option>
+        </select>
+    </div>
+    <div class="mb-3"><label>Email</label><input asp-for="Email" class="form-control" readonly /></div>
+    <button class="btn btn-primary">Guardar cambios</button>
+</form>

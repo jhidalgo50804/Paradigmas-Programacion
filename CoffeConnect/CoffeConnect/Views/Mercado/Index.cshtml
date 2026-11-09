@@ -1,0 +1,54 @@
+﻿@model List<Producto>
+@{
+    Layout = "_Layout";
+}
+<div class="d-flex gap-4 mt-3">
+    @await Html.PartialAsync("_SidebarUsuario")
+    <div class="flex-grow-1">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold">Mercado</h3>
+            <button class="btn text-white px-4" style="background:#3A8A4E; border-radius:10px;" data-bs-toggle="modal" data-bs-target="#crearProd">+ Vender producto</button>
+        </div>
+        <div class="row">
+            @foreach (var p in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card rounded-4 h-100 shadow-sm border-0">
+                        <img src="@(p.ImagenUrl ?? "https://via.placeholder.com/300")" class="card-img-top rounded-top-4" style="height:180px; object-fit:cover;" />
+                        <div class="card-body">
+                            <h6 class="fw-bold">@p.Nombre</h6>
+                            <p class="small text-muted">@p.Descripcion</p>
+                            <p class="fw-bold text-success">₡@p.Precio</p>
+                            <p class="small">Stock: @p.Cantidad | Vendedor: @p.Vendedor.NombreCompleto</p>
+                            @if (p.Agotado)
+                            {
+                                <span class="badge bg-danger w-100 py-2">AGOTADO</span>
+                            }
+                            else
+                            {
+
+                                <a asp-action="Pagar" asp-route-id="@p.Id" class="btn w-100 text-white" style="background:#3A8A4E;">Comprar</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="crearProd" tabindex="-1">
+    <div class="modal-dialog">
+        <form class="modal-content" asp-action="Crear" enctype="multipart/form-data" method="post">
+            <div class="modal-header"><h5>Vender producto</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <input name="Nombre" class="form-control mb-2" placeholder="Nombre" required />
+                <textarea name="Descripcion" class="form-control mb-2" placeholder="Descripción" required></textarea>
+                <input name="Precio" type="number" step="0.01" class="form-control mb-2" placeholder="Precio" required />
+                <input name="Cantidad" type="number" class="form-control mb-2" placeholder="Cantidad en stock" required />
+                <input type="file" name="Imagen" class="form-control" accept="image/*" />
+            </div>
+            <div class="modal-footer"><button class="btn btn-success w-100" style="background:#3A8A4E;">Publicar producto</button></div>
+        </form>
+    </div>
+</div>

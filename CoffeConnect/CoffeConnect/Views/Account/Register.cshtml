@@ -1,0 +1,59 @@
+﻿@model RegisterViewModel
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<div class="container py-5">
+    <div class="row g-4">
+        <div class="col-md-5">
+            <div>
+                <h1 class="fw-bold" style="color:var(--green-dark)">CoffeConnect</h1>
+                <div class="cc-card p-2 mt-4">
+                    <img src="~/img/finca.jpg" class="img-fluid rounded-4" />
+                </div>
+                <div class="text-white rounded-4 p-3 mt-3" style="background:var(--green-btn)">
+                    Conectando a más de 500+ caficultores en toda Costa Rica
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="cc-card">
+                <h1 class="fw-bold" style="color:var(--green-dark)">Únete a la comunidad</h1>
+                <p>Conecta con caficultores de todo el país</p>
+
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="All" class="text-danger small"></div>
+
+                    <label>Nombre completo</label>
+                    <input asp-for="NombreCompleto" class="cc-input" placeholder="Ej. Ruth López" />
+
+                    <label class="mt-3">Email</label>
+                    <input asp-for="Email" class="cc-input" placeholder="ejemplo@correo.com" />
+
+                    <label class="mt-3">Contraseña</label>
+                    <input asp-for="Password" type="password" class="cc-input" />
+
+                    <label class="mt-3">Confirmar contraseña</label>
+                    <input asp-for="ConfirmPassword" type="password" class="cc-input" />
+
+                    <label class="mt-3">Región</label>
+                    <select asp-for="Region" class="cc-input">
+                        <option value="">Seleccione una región</option>
+                        <option>Zona de los Santos</option>
+                        <option>Valle Central</option>
+                        <option>Perez Zeledon</option>
+                        <option>Cartago</option>
+                        <option>Otro</option>
+                    </select>
+
+                    <button class="cc-btn mt-4" type="submit">Crear cuenta</button>
+                </form>
+                <div class="text-center mt-3">
+                    ¿Ya tienes cuenta? <a asp-action="Login">Inicia sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

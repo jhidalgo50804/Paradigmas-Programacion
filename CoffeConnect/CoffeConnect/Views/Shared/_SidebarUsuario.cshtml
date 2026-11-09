@@ -1,0 +1,87 @@
+﻿@{
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    string IsActive(string ctrl, string act) => (controller == ctrl && action == act) ? "active" : "";
+}
+
+<style>
+    .sidebar-coffe {
+        background-color: #F8F3EC;
+        border-radius: 16px;
+        padding: 20px 12px;
+        width: 270px;
+        border: 1px solid #EDE6DC;
+    }
+
+        .sidebar-coffe .titulo {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #5A5A5A;
+            padding: 5px 18px 18px 18px;
+        }
+
+        .sidebar-coffe .nav-item-coffe {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 8px;
+            color: #1A1A1A;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 17px;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+        }
+
+            .sidebar-coffe .nav-item-coffe i {
+                font-size: 26px;
+                width: 28px;
+            }
+
+            .sidebar-coffe .nav-item-coffe:hover {
+                background-color: #EFE8DC;
+            }
+
+            .sidebar-coffe .nav-item-coffe.active {
+                background-color: #3A8A4E;
+                color: white;
+                border-radius: 8px;
+                margin-left: -12px;
+                margin-right: -12px;
+                padding-left: 30px;
+            }
+
+                .sidebar-coffe .nav-item-coffe.active i {
+                    color: white;
+                }
+</style>
+
+<div class="sidebar-coffe">
+    <div class="titulo">NAVEGACIÓN</div>
+
+    <a asp-controller="Home" asp-action="Index" class="nav-item-coffe @IsActive("Home", "Index")">
+        <i class="bi bi-house"></i> Inicio
+    </a>
+
+    <a asp-controller="Mercado" asp-action="Index" class="nav-item-coffe @IsActive("Mercado", "Index")">
+        <i class="bi bi-shop"></i> Mercado
+    </a>
+
+    <a asp-controller="Alertas" asp-action="Index" class="nav-item-coffe @IsActive("Alertas", "Index")">
+        <i class="bi bi-exclamation-triangle"></i> Alertas de Enfermedades
+    </a>
+
+    <a asp-controller="Comunidad" asp-action="Index" class="nav-item-coffe active">
+        <i class="bi bi-people"></i> Comunidad
+    </a>
+
+    <a asp-controller="Finca" asp-action="Index" class="nav-item-coffe @IsActive("Finca", "Index")">
+        <i class="bi bi-geo-alt"></i> Mi Finca
+    </a>
+
+    <a asp-controller="Recursos" asp-action="Index" class="nav-item-coffe @IsActive("Recursos", "Index")">
+        <i class="bi bi-book"></i> Recursos
+    </a>
+</div>

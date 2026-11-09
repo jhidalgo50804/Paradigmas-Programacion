@@ -1,0 +1,59 @@
+﻿@using CoffeConnect.Models
+@{
+    var sugeridos = ViewBag.Sugeridos as List<ApplicationUser>;
+    var debug = ViewBag.DebugGrafo as string;
+}
+
+<div style="width:320px;">
+    <div class="card rounded-4 border-0 shadow-sm mb-3 p-3">
+        <form method="get" action="/Comunidad/Index" id="formBusqueda">
+            <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                <input id="inputTrie" name="q" value="@ViewBag.Query" class="form-control" placeholder="Buscar: Roya..." autocomplete="off" />
+            </div>
+        </form>
+        <div id="sugerenciasTrie" class="mt-2"></div>
+    </div>
+
+    <div class="card rounded-4 border-0 shadow-sm p-3" style="background:#F8F3EC;">
+        <h6 class="fw-bold mb-1">👥 Quizá conozcas</h6>
+        <small class="text-muted d-block mb-2" style="font-size:10px;">@debug</small>
+
+        @if (sugeridos == null || !sugeridos.Any())
+        {
+            <div class="text-center py-2 border rounded-3 bg-white p-2">
+                <small class="text-danger fw-bold" style="font-size:11px;">No hay sugerencias</small><br />
+                <small class="text-muted" style="font-size:10px;">MiId: @ViewBag.MiId<br />@debug</small>
+            </div>
+        }
+        else
+        {
+            @foreach (var u in sugeridos)
+            {
+                <div class="d-flex align-items-center justify-content-between mb-3 bg-white p-2 rounded-3 border">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold" style="width:42px; height:42px;">
+                            @(string.IsNullOrEmpty(u.NombreCompleto) ? "?" : u.NombreCompleto.Substring(0, 1).ToUpper())
+                        </div>
+                        <div style="line-height:1.1;">
+                            <div class="fw-bold" style="font-size:13px;">@u.NombreCompleto</div>
+                            <small class="text-muted" style="font-size:11px;">Amigo de amigo (BFS)</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<script>
+    document.getElementById('inputTrie').addEventListener('input', async function(e){
+        let q = e.target.value;
+        let cont = document.getElementById('sugerenciasTrie');
+        if(q.length < 2){ cont.innerHTML=''; return; }
+        let res = await fetch(`/Comunidad/BuscarTrie?q=${q}`);
+        let data = await res.json();
+        if(data.length==0){ cont.innerHTML='<small class="text-muted">Sin resultados</small>'; return; }
+        cont.innerHTML = data.map(x=>`<a href="/Comunidad/Index?q=${encodeURIComponent(x.titulo)}" class="d-block p-2 bg-white border rounded mb-1 text-decoration-none text-dark" style="font-size:12px;">🔍 ${x.titulo}</a>`).join('');
+    });
+</script>

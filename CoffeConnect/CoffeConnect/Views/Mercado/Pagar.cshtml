@@ -1,0 +1,20 @@
+﻿@model Producto
+<div class="container mt-5" style="max-width:500px;">
+    <div class="card rounded-4 p-4 shadow">
+        <h4 class="fw-bold">Confirmar pago</h4>
+        <p>Estás comprando:</p>
+        <div class="d-flex gap-3 align-items-center">
+            <img src="@Model.ImagenUrl" style="width:80px; height:80px; object-fit:cover; border-radius:10px;" />
+            <div><b>@Model.Nombre</b><br />₡@Model.Precio<br /><small>Stock: @Model.Cantidad</small></div>
+        </div>
+        <hr />
+        <p>💳 Pago simulado - Tarjeta terminada en 4242</p>
+        <p>Tarifa: ₡0 | Envío: Gratis</p>
+        <h5>Total: ₡@Model.Precio</h5>
+        <form asp-action="ConfirmarCompra" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button class="btn w-100 text-white mt-3" style="background:#3A8A4E;">Pagar y comprar</button>
+            <a asp-action="Index" class="btn btn-light w-100 mt-2">Cancelar</a>
+        </form>
+    </div>
+</div>

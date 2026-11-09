@@ -1,0 +1,22 @@
+﻿@model List<Compra>
+@{
+    Layout = "_Layout";
+}
+<div class="d-flex gap-4 mt-3">
+    @await Html.PartialAsync("_SidebarUsuario")
+    <div class="flex-grow-1">
+        <h3 class="fw-bold mb-4">Mis productos comprados</h3>
+        @if (!Model.Any())
+        {
+            <p>Aún no has comprado nada. <a asp-action="Index">Ir al mercado</a></p>
+        }
+        @foreach (var c in Model)
+        {
+            <div class="card mb-2 rounded-4 p-3 d-flex flex-row gap-3 align-items-center">
+                <img src="@c.Producto.ImagenUrl" style="width:60px; height:60px; object-fit:cover; border-radius:8px;" />
+                <div><b>@c.Producto.Nombre</b><br /><small>@c.FechaCompra.ToString("dd/MM/yyyy") - ₡@c.TotalPagado</small></div>
+                <span class="ms-auto badge bg-success">Comprado</span>
+            </div>
+        }
+    </div>
+</div>
